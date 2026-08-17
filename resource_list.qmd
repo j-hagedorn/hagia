@@ -8,11 +8,9 @@ editor: visual
 
 - Fordham Internet Medieval Sourcebook: [Saints Lives](https://sourcebooks.fordham.edu/sbook3.asp)
 
-- Medieval Sourcebook: [The Golden Legend](https://sourcebooks.web.fordham.edu/basis/goldenlegend/index.asp) (Aurea Legenda)
+- [The Golden Legend](https://sourcebooks.web.fordham.edu/basis/goldenlegend/index.asp) (Aurea Legenda)
 
-  - Compiled by Jacobus de Voragine, 1275
-
-  - Translated to English by William Caxton, 1483
+  - Compiled by Jacobus de Voragine, 1275; translated to English by William Caxton, 1483
 
 <!-- -->
 
@@ -20,6 +18,6 @@ editor: visual
 
   - Raw text in Greek
 
-  - URLs in form: <https://www.doaks.org/research/byzantine/resources/hagiography/database/texts/56.html>
+  - URLs in form with suffix: [.../texts/56.html](https://www.doaks.org/research/byzantine/resources/hagiography/database/texts/56.html)
 
 - [Georgian Saints](https://orthochristian.com/7213.html)
