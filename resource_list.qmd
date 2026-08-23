@@ -12,8 +12,6 @@ editor: visual
 
   - Compiled by Jacobus de Voragine, 1275; translated to English by William Caxton, 1483
 
-<!-- -->
-
 - [Dumbarton Oaks Hagiography Database](https://www.doaks.org/research/byzantine/resources/hagiography/database/dohp.asp?cmd=SList)
 
   - Raw text in Greek
