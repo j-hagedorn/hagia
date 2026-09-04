@@ -1,0 +1,505 @@
+---
+title: "Open English Hagiography Corpus (OEHC)"
+subtitle: "Corpus rationale, sources, data model, and dataset documentation"
+author: "Open English Hagiography Corpus"
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-summary: "Show R code"
+    embed-resources: true
+    link-external-newwindow: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# Overview
+
+The **Open English Hagiography Corpus (OEHC)** is a curated digital corpus of Christian hagiographic narratives available in English or in historically significant forms of English. It is designed for reproducible textual research while preserving the bibliographic and digital provenance of each text.
+
+The corpus is intentionally modular. Current acquisition pipelines draw from:
+
+1. the **Dumbarton Oaks Hagiography Database**;
+2. Jacobus de Voragine's **Golden Legend**, in William Caxton's English version as edited by F. S. Ellis;
+3. selected hagiographic works from the **Ante-Nicene Fathers (ANF)** and **Nicene and Post-Nicene Fathers (NPNF)** on Wikisource; and
+4. selected narratives from **Ælfric's Lives of Saints**, using the English translations associated with Walter W. Skeat's EETS edition on Wikisource.
+
+OEHC does not treat all saints' lives as interchangeable documents. Differences in period, translation, genre, editorial history, and transmission are retained so that they can be modeled explicitly in later analysis.
+
+# Corpus scope and design
+
+## Unit of analysis
+
+The primary unit is the **individual hagiographic narrative or work**, not the webpage, printed volume, or digital repository.
+
+Accordingly:
+
+- an individual saint's life in the *Golden Legend* becomes one record;
+- a multi-chapter work such as Athanasius's *Life of Antony* is reassembled into one record;
+- works distributed across multiple Wikisource subpages are concatenated in textual order;
+- distinct narratives about the same saint remain separate records;
+- source-specific identifiers such as volume, chapter, feast date, or database key remain in the source datasets even when they are absent from the joined dataset.
+
+A life of Martin in Sulpicius Severus, Ælfric, and the *Golden Legend* therefore represents three distinct textual witnesses rather than duplicated observations.
+
+## Inclusion criteria
+
+The core corpus prioritizes texts that are:
+
+- substantially hagiographic, including *vitae*, martyr acts, passions, miracle narratives, legendary lives, and closely related saint-centered narratives;
+- available in a stable digital form that can be acquired reproducibly;
+- linked to an identifiable printed or digital source;
+- sufficiently documented to preserve provenance at the individual-text level;
+- structured well enough for reliable automated extraction.
+
+Where possible, the corpus favors corrected digital transcriptions over raw OCR.
+
+## Exclusions
+
+The acquisition pipelines generally exclude:
+
+- modern biographies and encyclopedia entries;
+- modern devotional retellings without a recoverable textual source;
+- doctrinal or liturgical material that is not substantially hagiographic;
+- editorial introductions, explanatory notes, and elucidations when they can be separated from the primary text;
+- duplicate web presentations of the same edition unless they serve a validation purpose.
+
+Later synthetic compilations may be added as separate comparison modules rather than mixed with direct translations or medieval hagiographic works.
+
+# Source modules
+
+## Dumbarton Oaks Hagiography Database
+
+The [Dumbarton Oaks Hagiography Database](https://www.doaks.org/research/byzantine/resources/hagiography/database/dohp.asp?cmd=SList) provides structured records for Byzantine saints and hagiographic texts.
+
+The scraper extracts, where available:
+
+- saint name and dates;
+- BHG, BHL, and BHO identifiers;
+- date of the *vita*;
+- domain and geographic region;
+- author;
+- cited edition; and
+- source text.
+
+Dumbarton Oaks is particularly valuable because it links digital texts to hagiographic classification systems and scholarly editions.
+
+The source text exposed by the database may be Greek rather than English. If English translations are generated later, the source-language text and translated text should be preserved separately.
+
+Because access to a digital transcription does not itself establish unrestricted redistribution rights, Dumbarton Oaks records retain a conservative rights status unless the underlying edition and digital reuse status have been independently verified.
+
+## The Golden Legend
+
+The [Internet Medieval Sourcebook edition of the *Golden Legend*](https://sourcebooks.web.fordham.edu/basis/goldenlegend/) presents the seven-volume Temple Classics edition of Jacobus de Voragine's *Golden Legend*, in William Caxton's English version and F. S. Ellis's edition.
+
+The scraper treats individual chapter/story divisions as corpus records. This source is important as a major witness to the **medieval reception and transformation of earlier saint traditions**, rather than as a direct equivalent of earlier Greek or Latin vitae.
+
+Typical metadata include:
+
+```text
+collection = "medieval_translations"
+genre = "legendary"
+```
+
+The historical Ellis/Caxton edition and Fordham's electronic presentation are distinct layers of provenance and should be documented separately.
+
+## ANF and NPNF hagiography
+
+Selected hagiographic texts from the **Ante-Nicene Fathers** and **Nicene and Post-Nicene Fathers** are acquired through the [English Wikisource](https://en.wikisource.org/) MediaWiki API.
+
+The curated set includes works such as:
+
+- Athanasius, *Life of Antony*;
+- Jerome, *Life of Paulus the First Hermit*;
+- Jerome, *Life of Hilarion*;
+- Jerome, *Life of Malchus*;
+- Sulpicius Severus, *Life of St. Martin*;
+- Sulpicius Severus, *Dialogues concerning St. Martin*;
+- Pontius, *Life and Passion of Cyprian*;
+- *Passion of Perpetua and Felicitas*;
+- *Martyrdom of Polycarp*;
+- *Passion of the Scillitan Martyrs*;
+- Eusebius, *Martyrs of Palestine*; and
+- selected martyr-centered passages from Eusebius's *Ecclesiastical History*.
+
+Multi-page works are discovered through the MediaWiki API and reassembled in reading order. Editorial introductions and elucidations are excluded when structurally separable.
+
+This module provides a relatively coherent body of public-domain English translations of early Christian hagiographic and martyr literature.
+
+## Ælfric's Lives of Saints
+
+The [Wikisource edition of *Ælfric's Lives of Saints*](https://en.wikisource.org/wiki/%C3%86lfric%27s_Lives_of_Saints) is based on Walter W. Skeat's EETS edition, published in four parts between 1881 and 1900.
+
+OEHC uses a curated subset of about thirty saint-centered narratives. Predominantly doctrinal or non-hagiographic pieces are excluded. The retained works are classified as `vita`, `martyr_act`, or `legend` as appropriate.
+
+These texts provide a distinct witness to the **English reception and rewriting of hagiographic traditions** and should not be treated as linguistically equivalent to nineteenth-century translations of Greek and Latin originals.
+
+# Data architecture
+
+OEHC preserves both **source-specific datasets** and a **joined analytical dataset**.
+
+| R object | Source module |
+|---|---|
+| `df_doaks` | Dumbarton Oaks Hagiography Database |
+| `df_golden_legend` | *Golden Legend* |
+| `df_npnf` | ANF/NPNF hagiographic selection |
+| `df_aelfric` | Ælfric's *Lives of Saints* |
+
+The joined dataset retains only fields present in all four source dataframes and adds a `dataset` field identifying the acquisition pipeline.
+
+```{r}
+#| label: combine-datasets
+#| eval: false
+
+library(dplyr)
+library(purrr)
+
+datasets <- list(
+  aelfric = df_aelfric,
+  doaks = df_doaks,
+  golden_legend = df_golden_legend,
+  npnf = df_npnf
+) |>
+  imap(~ mutate(.x, dataset = .y))
+
+common_cols <- Reduce(
+  intersect,
+  lapply(datasets, names)
+)
+
+df_oehc <- datasets |>
+  map(~ select(.x, all_of(common_cols))) |>
+  bind_rows()
+```
+
+This approach preserves source-specific metadata in the original datasets rather than forcing sparsely populated fields into the common schema.
+
+# Loading the joined dataset
+
+The documentation below renders dynamically if a saved `df_oehc` is available. It looks for:
+
+1. `data/df_oehc.parquet`
+2. `data/df_oehc.rds`
+3. `df_oehc.parquet`
+4. `df_oehc.rds`
+
+```{r}
+#| label: load-data
+#| include: false
+
+candidate_files <- c(
+  "data/df_oehc.parquet",
+  "df_oehc.parquet"
+)
+
+data_file <- candidate_files[file.exists(candidate_files)][1]
+
+if (length(data_file) == 0 || is.na(data_file)) {
+  df_oehc <- NULL
+} else if (grepl("\\.parquet$", data_file, ignore.case = TRUE)) {
+  if (!requireNamespace("arrow", quietly = TRUE)) {
+    stop("Install the 'arrow' package to read the Parquet dataset.")
+  }
+  df_oehc <- arrow::read_parquet(data_file)
+} else {
+  df_oehc <- readRDS(data_file)
+}
+```
+
+# Current corpus summary
+
+```{r}
+#| label: corpus-summary
+#| results: asis
+
+if (is.null(df_oehc)) {
+
+  cat(
+    "> **Dataset not found at render time.** ",
+    "Save `df_oehc` as `data/df_oehc.parquet` or `data/df_oehc.rds` ",
+    "to render live corpus statistics.\n"
+  )
+
+} else {
+
+  summary_stats <- data.frame(
+    Measure = c(
+      "Texts",
+      "Source modules",
+      "Distinct authors",
+      "Distinct genres"
+    ),
+    Value = c(
+      nrow(df_oehc),
+      dplyr::n_distinct(df_oehc$dataset),
+      if ("author" %in% names(df_oehc))
+        dplyr::n_distinct(df_oehc$author, na.rm = TRUE)
+      else NA,
+      if ("genre" %in% names(df_oehc))
+        dplyr::n_distinct(df_oehc$genre, na.rm = TRUE)
+      else NA
+    )
+  )
+
+  print(knitr::kable(summary_stats, align = c("l", "r")))
+}
+```
+
+## Texts by source module
+
+```{r}
+#| label: module-counts
+
+if (!is.null(df_oehc) && "dataset" %in% names(df_oehc)) {
+
+  df_oehc |>
+    dplyr::count(dataset, name = "texts", sort = TRUE) |>
+    knitr::kable(
+      col.names = c("Dataset", "Texts"),
+      align = c("l", "r")
+    )
+}
+```
+
+## Texts by genre
+
+```{r}
+#| label: genre-counts
+
+if (!is.null(df_oehc) && "genre" %in% names(df_oehc)) {
+
+  df_oehc |>
+    dplyr::count(genre, name = "texts", sort = TRUE) |>
+    knitr::kable(
+      col.names = c("Genre", "Texts"),
+      align = c("l", "r")
+    )
+}
+```
+
+# Common dataset schema
+
+The joined dataframe retains only fields common to every acquisition dataset.
+
+```{r}
+#| label: data-dictionary
+
+dictionary <- tibble::tribble(
+  ~field, ~description,
+  "schema_version", "Version of the OEHC metadata schema.",
+  "text_id", "Stable internal OEHC identifier.",
+  "dataset", "Acquisition pipeline or source dataset.",
+  "bhg", "Bibliotheca Hagiographica Graeca identifier, where available.",
+  "bhl", "Bibliotheca Hagiographica Latina identifier, where available.",
+  "bho", "Bibliotheca Hagiographica Orientalis identifier, where available.",
+  "title", "Normalized human-readable title.",
+  "saint_dates", "Dates associated with the saint when supplied by the source.",
+  "original_date", "Date or approximate date associated with composition of the work or collection.",
+  "domain", "Source-supplied domain/category information, where applicable.",
+  "region", "Geographic association supplied or normalized from the source.",
+  "author", "Author or attributed author.",
+  "source_collection", "Printed edition, historical collection, or source series.",
+  "text_source_url", "Digital source used for acquisition.",
+  "rights_status", "Project assessment of reuse or redistribution status.",
+  "genre", "Controlled hagiographic genre classification.",
+  "collection", "High-level OEHC corpus module.",
+  "source_text", "Acquired text used as the basis for the record."
+)
+
+if (!is.null(df_oehc)) {
+  dictionary <- dictionary |>
+    dplyr::filter(field %in% names(df_oehc))
+}
+
+knitr::kable(
+  dictionary,
+  col.names = c("Field", "Description"),
+  align = c("l", "l")
+)
+```
+
+## Metadata completeness
+
+```{r}
+#| label: metadata-completeness
+
+if (!is.null(df_oehc)) {
+
+  fields <- intersect(
+    c(
+      "bhg",
+      "bhl",
+      "bho",
+      "saint_dates",
+      "original_date",
+      "region",
+      "author",
+      "source_collection",
+      "genre",
+      "source_text"
+    ),
+    names(df_oehc)
+  )
+
+  missingness <- purrr::map_dfr(
+    fields,
+    function(field) {
+
+      x <- df_oehc[[field]]
+
+      tibble::tibble(
+        field = field,
+        missing = sum(is.na(x) | trimws(as.character(x)) == ""),
+        total = length(x),
+        percent_missing = round(100 * missing / total, 1)
+      )
+    }
+  )
+
+  knitr::kable(
+    missingness,
+    col.names = c("Field", "Missing", "Total", "% missing"),
+    align = c("l", "r", "r", "r")
+  )
+}
+```
+
+# Metadata and provenance conventions
+
+## Identifiers
+
+`text_id` is an OEHC identifier rather than a pre-existing scholarly standard. It is deliberately independent of title, saint name, and external classification numbers.
+
+```text
+oehc_000001
+oehc_000002
+oehc_000003
+```
+
+BHG, BHL, and BHO identifiers are stored separately in `bhg`, `bhl`, and `bho`. They are external scholarly identifiers rather than OEHC primary keys.
+
+## Dates
+
+OEHC currently preserves dates as textual values because source conventions vary:
+
+```text
+180
+356–362
+4th century
+late 4th century
+c. 998–1002
+```
+
+A future analytical layer may add normalized numeric `date_start` and `date_end` fields while preserving the original textual date.
+
+## Geography
+
+Geographic metadata remain source-dependent. Structured normalization should be treated as a later enrichment step rather than imposed silently during scraping.
+
+## Provenance
+
+OEHC distinguishes:
+
+1. the **historical work**;
+2. the **edition or translation** used as the textual basis; and
+3. the **digital source** from which the electronic text was acquired.
+
+`source_collection` records the edition or source series, while `text_source_url` records the digital acquisition point.
+
+# Rights and redistribution
+
+Rights are handled conservatively at the source-module level.
+
+The public-domain status of a historical work does not automatically establish unrestricted reuse of a modern transcription or website presentation. In the current acquisition design:
+
+- Wikisource ANF/NPNF texts are treated as public-domain source editions;
+- the Wikisource/Skeat Ælfric material is treated as public domain;
+- Dumbarton Oaks records retain `review_required` unless reuse status is independently verified;
+- Fordham's *Golden Legend* presentation retains `review_required` because the historical edition and website presentation are distinct layers.
+
+Rights should be reviewed again before distributing a full-text public release.
+
+# Limitations and analytical use
+
+OEHC is not a representative sample of all Christian hagiography. It is shaped by the availability of suitable digital editions and currently overrepresents Greek, Latin, Old English, and Western medieval traditions relative to Syriac, Coptic, Armenian, Georgian, Arabic, and other traditions.
+
+Multiple records about the same saint are often intentional and may represent different compositions, recensions, translations, or later rewritings.
+
+Editorial traditions also differ substantially. A nineteenth-century NPNF translation, Caxton/Ellis, a Skeat translation of Ælfric, and a modern digital transcription are not linguistically equivalent witnesses.
+
+For quantitative analysis, users should therefore:
+
+- inspect results by `dataset` as well as in the aggregate;
+- control for historical period and source collection;
+- distinguish direct translations from medieval English rewritings;
+- preserve `text_id` as the stable join key;
+- retain BHG/BHL/BHO identifiers for external scholarly linkage;
+- use source-specific datasets when variables such as volume, chapter, feast date, or database key are relevant.
+
+If Dumbarton Oaks source texts remain in Greek, they should not be included in English-language linguistic analyses until a separately documented English translation layer has been created.
+
+# Suggested repository organization
+
+```text
+.
+├── R/
+│   ├── scrape_doaks.R
+│   ├── scrape_golden_legend.R
+│   ├── scrape_npnf.R
+│   ├── scrape_aelfric.R
+│   └── combine_datasets.R
+│
+├── data/
+│   ├── df_doaks.parquet
+│   ├── df_golden_legend.parquet
+│   ├── df_npnf.parquet
+│   ├── df_aelfric.parquet
+│   └── df_oehc.parquet
+│
+├── cache/
+├── corpus/
+└── oehc_documentation.qmd
+```
+
+The `cache/` directory can usually be excluded from version control if it contains only reproducible intermediate downloads.
+
+# Rendering and GitHub Pages
+
+Render locally with:
+
+```bash
+quarto render oehc_documentation.qmd
+```
+
+For a repository-level Quarto website, a minimal `_quarto.yml` is:
+
+```yaml
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Open English Hagiography Corpus"
+  navbar:
+    left:
+      - href: oehc_documentation.qmd
+        text: Corpus
+
+format:
+  html:
+    toc: true
+```
+
+Configure GitHub Pages to serve the repository's `docs/` directory.
+
+# Source links
+
+- [Dumbarton Oaks Hagiography Database](https://www.doaks.org/research/byzantine/resources/hagiography/database/dohp.asp?cmd=SList)
+- [Fordham Internet Medieval Sourcebook: The Golden Legend](https://sourcebooks.web.fordham.edu/basis/goldenlegend/)
+- [Wikisource: Ælfric's Lives of Saints](https://en.wikisource.org/wiki/%C3%86lfric%27s_Lives_of_Saints)
+- [Wikisource: NPNF, Life of Antony](https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers%3A_Series_II/Volume_IV/Life_of_Antony)
