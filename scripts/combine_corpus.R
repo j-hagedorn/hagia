@@ -29,3 +29,9 @@ df_oehc <- datasets |>
   bind_rows()
 
 rm(datasets); rm(common_cols); rm(manifest)
+
+## Scrape and save
+
+# arrow::write_parquet(df_oehc, "derived/df_oehc.parquet")
+
+# df_oehc <- arrow::read_parquet("derived/df_oehc.parquet")
