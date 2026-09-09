@@ -44,4 +44,4 @@ hagia <-
 
 rm(datasets, common_cols, prepare_translation)
 
-arrow::write_parquet(hagia,"derived/hagia.parquet")
+arrow::write_parquet(hagia,"hagia.parquet")
