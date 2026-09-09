@@ -2267,7 +2267,6 @@ vertical-align: -.125em;
   </ul></li>
   <li><a href="#limitations-and-analytical-use" id="toc-limitations-and-analytical-use" class="nav-link" data-scroll-target="#limitations-and-analytical-use"><span class="header-section-number">12</span> Limitations and analytical use</a></li>
   <li><a href="#resources-evaluated-for-expansion" id="toc-resources-evaluated-for-expansion" class="nav-link" data-scroll-target="#resources-evaluated-for-expansion"><span class="header-section-number">13</span> Resources evaluated for expansion</a></li>
-  <li><a href="#consolidated-source-links" id="toc-consolidated-source-links" class="nav-link" data-scroll-target="#consolidated-source-links"><span class="header-section-number">14</span> Consolidated source links</a></li>
   </ul>
 </nav>
 </div>
@@ -2307,12 +2306,12 @@ vertical-align: -.125em;
 
 <section id="overview" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Overview</h1>
-<p><strong>Hagia</strong> is a curated, reproducible corpus of Christian hagiographic narratives represented in English for computational and comparative textual research. The project is designed especially for the study of <strong>motifs, themes, entities, actions, recurrent concepts, and narrative structures</strong> across historically diverse hagiographic traditions.</p>
-<p>The corpus brings together texts that were already available in English with documented English translations generated from selected Latin and Greek source-language texts. Source-language texts, translation checkpoints, source-specific metadata, and acquisition scripts are retained outside the final common analytical dataframe so that the English analytical layer remains auditable.</p>
-<p>OEHC is intentionally <strong>modular rather than canonical or exhaustive</strong>. It does not assume that all saints’ lives are equivalent observations. Differences in language, date, genre, author, compiler, textual tradition, translation history, edition, and digital source are retained wherever the source datasets permit. The final combined dataframe is deliberately conservative: it retains only metadata fields shared across all contributing datasets, while richer source-specific metadata remains available upstream.</p>
+<p><strong>Hagia</strong> is a curated, reproducible corpus of hagiographic narratives represented in English for computational and comparative textual research. The project is designed especially for the study of <strong>motifs, themes, entities, actions, recurrent concepts, and narrative structures</strong> across historically diverse hagiographic traditions.</p>
+<p>The corpus brings together texts that were already openly available in English with documented English translations generated from selected source-language texts. Source-language texts, translation checkpoints, source-specific metadata, and acquisition scripts are retained outside the final common analytical dataframe so that the English analytical layer remains auditable.</p>
+<p>The corpus is intentionally <strong>modular rather than canonical or exhaustive</strong>. It does not assume that all saints’ lives are equivalent observations. Differences in language, date, genre, author, compiler, textual tradition, translation history, edition, and digital source are retained wherever the source datasets permit. The final combined dataframe retains only metadata fields shared across all contributing datasets, while richer source-specific metadata remains available in upstream (see the <code>derived</code> folder).</p>
 <p>The project has five related aims:</p>
 <ol type="1">
-<li>to assemble a substantial body of machine-readable Christian hagiography in English;</li>
+<li>to assemble a substantial body of machine-readable hagiography in English;</li>
 <li>to make acquisition and transformation reproducible through documented R scripts;</li>
 <li>to preserve bibliographic, textual, and digital provenance;</li>
 <li>to support quantitative analysis without erasing differences among textual traditions; and</li>
@@ -3038,27 +3037,6 @@ after 914</code></pre>
 <li>additional Syriac hagiography;</li>
 <li>Ethiopic hagiography and miracle literature; and</li>
 <li>South Asian / St Thomas Christian hagiographic reception where openly reusable machine-readable texts can be identified.</li>
-</ul>
-<p>Martyrologies are methodologically distinct from longer narrative hagiography and should normally be added as their own corpus module rather than mixed uncritically with vitae and passions.</p>
-</section>
-<section id="consolidated-source-links" class="level1" data-number="14">
-<h1 data-number="14"><span class="header-section-number">14</span> Consolidated source links</h1>
-<ul>
-<li><a href="https://www.doaks.org/research/byzantine/resources/hagiography/database/dohp.asp?cmd=SList">Dumbarton Oaks Hagiography Database</a></li>
-<li><a href="https://sourcebooks.fordham.edu/sbook3.asp">Fordham Internet Medieval Sourcebook: Saints’ Lives</a></li>
-<li><a href="https://sourcebooks.web.fordham.edu/basis/goldenlegend/index.asp">Fordham Internet Medieval Sourcebook: <em>Golden Legend</em></a></li>
-<li><a href="https://en.wikisource.org/wiki/%C3%86lfric%27s_Lives_of_Saints">Wikisource: Ælfric’s <em>Lives of Saints</em></a></li>
-<li><a href="https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers%3A_Series_II/Volume_IV/Life_of_Antony">Wikisource: NPNF, <em>Life of Antony</em></a></li>
-<li><a href="https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_II/Sozomen/Book_III/Chapter_14">Sozomen, NPNF/Wikisource</a></li>
-<li><a href="https://tertullian.org/fathers/eusebius_martyrs.htm">Eusebius, long <em>Martyrs of Palestine</em></a></li>
-<li><a href="https://atlas.perseus.tufts.edu/library/urn%3Acts%3AgreekLit%3Atlg4089.tlg004.1st1K-grc1/">Theodoret, <em>Historia Religiosa</em>, Scaife/Perseus</a></li>
-<li><a href="https://la.wikisource.org/wiki/Abbreviatio_in_gestis_et_miraculis_sanctorum">Jean de Mailly, <em>Abbreviatio in gestis et miraculis sanctorum</em></a></li>
-<li><a href="https://la.wikisource.org/wiki/Historia_tripartita"><em>Historia tripartita</em></a></li>
-<li><a href="https://la.wikisource.org/wiki/Martyrologium_(Ado_Viennensis)">Ado of Vienne, <em>Martyrologium</em></a></li>
-<li><a href="https://la.wikisource.org/wiki/Martyrologium_1_(Usuardus_Sangermanensis)">Usuard, <em>Martyrologium</em>, vol. 1</a></li>
-<li><a href="https://la.wikisource.org/wiki/Martyrologium_2_(Usuardus_Sangermanensis)">Usuard, <em>Martyrologium</em>, vol. 2</a></li>
-<li><a href="https://dn790002.ca.archive.org/0/items/patrologiaorien10pari/patrologiaorien10pari_djvu.txt">Patrologia Orientalis, Tomus Decimus</a></li>
-<li><a href="https://orthochristian.com/7213.html">Georgian Saints</a></li>
 </ul>
 </section>
 
