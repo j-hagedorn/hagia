@@ -923,7 +923,7 @@ scrape_aelfric <- function(
   )
 }
 
-# df_aelfric <- 
+# df_aelfric <-
 #   scrape_aelfric(
 #    works = manifest$work_id,
 #    start_text_id = "oehc_000333"

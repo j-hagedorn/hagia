@@ -458,5 +458,5 @@ df_latin_translated <-
   translate_latin_corpus(
     df = df_latin,
     model = "claude-sonnet-5",
-    checkpoint_file = "df_latin_translation_checkpoint.rds"
+    checkpoint_file = "derived/df_latin_translation_checkpoint.rds"
   )

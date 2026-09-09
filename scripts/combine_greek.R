@@ -471,5 +471,5 @@ df_greek_translated <-
   translate_greek_corpus(
     df = df_greek,
     model = "claude-sonnet-5",
-    checkpoint_file = "df_greek_translation_checkpoint.rds"
+    checkpoint_file = "derived/df_greek_translation_checkpoint.rds"
   )
